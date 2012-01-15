@@ -1,0 +1,34 @@
+A collection of scripts I use for reviewing houses and quickly
+trying to determine status changes.  
+
+remax.py <mlsnum> 
+    Lookup a house on RE/MAX and grab relevant financial information
+
+csvreader.py <csvfile>
+    Read a spreadsheet with a minimum set of headers that include:
+    * MLS
+    * Address
+    * Asking Price
+    * Yearly Taxes
+    * HOA (Monthly)
+    
+    Look up each house on RE/MAX and ascertain whether the house has
+    changed in one of the following ways:
+    * Price changed
+    * Status changed
+    * House no longer available
+
+Support Files
+-------------
+house.py 
+    class definition for a house from a spreadsheet or RE/MAX
+xmlutils.py
+    Support file for XML parsing
+util.py
+    Random utilities
+downloader.py
+    Retrieve web pages intelligently
+distance.py
+    Used to query Google to determine how far a house is from
+    a location
+
