@@ -6,12 +6,25 @@ import exceptions
 import house
 import util
 import xml
+try:
+    from clint.textui import colored
+    blue = colored.blue
+    red = colored.red
+    yellow = colored.yellow
+    green = colored.green
+except Exception, e:
+    print("Error: {0}".format(e))
+    print("'pip install clint' to get colored output")
+    blue = str
+    red = str
+    yellow = str
+    green = str
 
 def read_csv(csvfile):
     try:
         fh = open(csvfile, "r")
         csv_reader = csv.DictReader(fh)
-        # Reset of the rows are data
+        # Rest of the rows are data
         return csv_reader
     except csv.Error, e:
         print("CSV Error: {0}".format(str(e)))
@@ -34,26 +47,23 @@ def lookup_houses(filename):
     lst = read_csv(filename)
     houses = read_houses(lst)
     for t in houses:
-        print("{0}: ".format(t.MLS), end="")
+        #print("{0}: ".format(t.MLS), end="")
         try:
             tocompare = remax.get_house(t.MLS)
-            #print(str(dir(tocompare)))
         except xml.parsers.expat.ExpatError, e:
-            print("Must manually lookup {0}".format(t.MLS))
+            print(yellow("{0}: Must manually lookup".format(t.MLS)))
             continue
         except remax.RetrievalError:
-            print("Error retrieving {0}".format(t.MLS))
+            print(yellow("{0}: Error retrieving".format(t.MLS)))
             continue
         if tocompare is None:
-            print("House '{0}' is no longer available!!!".format(t.MLS))
+            print(red("{0}: House is no longer available!!!".format(t.MLS)))
         elif tocompare != t:
-            print("Price changed to '${0:.02f}'".format(tocompare.Price))
-            #print(str(t))
-            #print(str(tocompare))
+            print(blue("{0}: Price changed to '${1:.02f}'".format(t.MLS, tocompare.Price)))
         elif tocompare.status() != "active":
-            print("Status changed to '{0}'".format(tocompare.Status))
+            print(red("{0}: Status changed to '{1}'".format(t.MLS, tocompare.Status)))
         else:
-            print("No change")
+            print("{0}: No change".format(t.MLS))
 
 if __name__ == "__main__":
     import sys

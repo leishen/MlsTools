@@ -9,7 +9,7 @@ import re
 import xml.dom.minidom as xmlparse
 import house
 import util
-from myxml import getnodetext
+from xmlutils import getnodetext
 try:
     import BeautifulSoup as bs
 except ImportError:
