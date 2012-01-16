@@ -2,7 +2,6 @@
 from __future__ import print_function
 import csv
 import remax
-import exceptions
 import house
 import util
 import xml
@@ -43,14 +42,23 @@ def read_houses(lst):
         houses.append(t)
     return houses
 
-def lookup_houses(filename):
+def mls_list(filename):
     lst = read_csv(filename)
     houses = read_houses(lst)
+    return map(lambda x: x.MLS, houses)
+
+def get_houses(filename):
+    lst = read_csv(filename)
+    houses = read_houses(lst)
+    return houses
+
+def find_updates(filename):
+    houses = get_houses(filename)
     for t in houses:
         #print("{0}: ".format(t.MLS), end="")
         try:
             tocompare = remax.get_house(t.MLS)
-        except xml.parsers.expat.ExpatError, e:
+        except xml.parsers.expat.ExpatError:
             print(yellow("{0}: Must manually lookup".format(t.MLS)))
             continue
         except remax.RetrievalError:
@@ -68,7 +76,7 @@ def lookup_houses(filename):
 if __name__ == "__main__":
     import sys
     try:
-        lookup_houses(sys.argv[1])
+        find_updates(sys.argv[1])
     except IndexError:
         print("{prog} <file>".format(sys.argv[0]))
     except KeyboardInterrupt:
