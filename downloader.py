@@ -36,13 +36,16 @@ def url_to_path(url):
     return url
 
 def get_url_response(url):
-    httplib.HTTPConnection.debuglevel = 1
-    newurl = full_url(url)
-    logging.debug("GET %s" % (newurl))
-    request = urllib2.Request(newurl)
-    res = urllib2.urlopen(request)
-    logging.debug("[%3d] %s" % (res.code, res.url))
-    return res
+    try:
+        httplib.HTTPConnection.debuglevel = 1
+        newurl = full_url(url)
+        logging.debug("GET %s" % (newurl))
+        request = urllib2.Request(newurl)
+        res = urllib2.urlopen(request)
+        logging.debug("[%3d] %s" % (res.code, res.url))
+        return res
+    except:
+        return None
 
 def retrieve_url_data(res):
     try:

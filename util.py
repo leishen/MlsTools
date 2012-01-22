@@ -41,6 +41,9 @@ def tofloat(num):
     return float(''.join(num.split(',')))
 
 def format_number(string):
-    s = string.strip('$')
-    s = s.strip('%')
-    return tofloat(s)
+    try:
+        s = string.strip('$')
+        s = s.strip('%')
+        return tofloat(s)
+    except:
+        return None

@@ -1,6 +1,9 @@
 A collection of scripts I use for reviewing houses and quickly
 trying to determine status changes.  
 
+Requirements:
+    BeautifulSoup
+
 remax.py <mlsnum> 
     Lookup a house on RE/MAX and grab relevant financial information
 

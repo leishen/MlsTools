@@ -58,8 +58,8 @@ def find_updates(filename):
         #print("{0}: ".format(t.MLS), end="")
         try:
             tocompare = remax.get_house(t.MLS)
-        except xml.parsers.expat.ExpatError:
-            print(yellow("{0}: Must manually lookup".format(t.MLS)))
+        except xml.parsers.expat.ExpatError, e:
+            print(yellow("{0}: Must manually lookup (xml parsing error): {1}".format(t.MLS, e)))
             continue
         except remax.RetrievalError:
             print(yellow("{0}: Error retrieving".format(t.MLS)))
