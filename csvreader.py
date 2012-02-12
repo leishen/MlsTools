@@ -5,6 +5,9 @@ import remax
 import house
 import util
 import xml
+import xml.parsers
+import xml.parsers.expat
+
 try:
     from clint.textui import colored
     blue = colored.blue
@@ -64,12 +67,16 @@ def find_updates(filename):
         except remax.RetrievalError:
             print(yellow("{0}: Error retrieving".format(t.MLS)))
             continue
+        except remax.NotFoundException, e:
+            print(red("{0}: House is no longer available!!!".format(t.MLS)))
+            continue
+
         if tocompare is None:
             print(red("{0}: House is no longer available!!!".format(t.MLS)))
-        elif tocompare != t:
-            print(blue("{0}: Price changed to '${1:.02f}'".format(t.MLS, tocompare.Price)))
         elif tocompare.status() != "active":
             print(red("{0}: Status changed to '{1}'".format(t.MLS, tocompare.Status)))
+        elif tocompare != t:
+            print(blue("{0}: Price changed to '${1:.02f}'".format(t.MLS, tocompare.Price)))
         else:
             print("{0}: No change".format(t.MLS))
 

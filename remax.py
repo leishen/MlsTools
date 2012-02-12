@@ -67,11 +67,11 @@ def retrieve(mls, state="md"):
                     break
         del b
         del c
-    except:
-        raise RetrievalError("Error retrieving {0}".format(mls))
+    except Exception, e:
+        raise NotFoundException("Retrieval error: {0}".format(e))
 
     if url is None:
-        raise RetrievalError("Error retrieving {0}".format(mls))
+        raise NotFoundException("Error retrieving {0}: Could not determine url".format(mls))
 
     try:
         # Get the house details page itself 
@@ -83,8 +83,8 @@ def retrieve(mls, state="md"):
             # Works better (read: at all) if we format it utf-8 instead of utf-16
             xml = re.sub("utf-16", "utf-8", xml)
         return xml
-    except:
-        raise RetrievalError("Could not get details for {0}".format(mls))
+    except Exception, e:
+        raise RetrievalError("Could not get details for {0}: {1}".format(mls, e))
 
 def parse_house(xmlstr):
     x = xmlparse.parseString(xmlstr)
