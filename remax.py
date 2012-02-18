@@ -67,6 +67,8 @@ def retrieve(mls, state="md"):
                     break
         del b
         del c
+    except KeyboardInterrupt:
+        raise
     except Exception, e:
         raise NotFoundException("Retrieval error: {0}".format(e))
 
@@ -83,6 +85,8 @@ def retrieve(mls, state="md"):
             # Works better (read: at all) if we format it utf-8 instead of utf-16
             xml = re.sub("utf-16", "utf-8", xml)
         return xml
+    except KeyboardInterrupt:
+        raise
     except Exception, e:
         raise RetrievalError("Could not get details for {0}: {1}".format(mls, e))
 
