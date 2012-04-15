@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from __future__ import print_function
 import csv
-import remax
+import redfin
 import house
 import util
 import xml
@@ -60,16 +60,16 @@ def find_updates(filename):
     for t in houses:
         #print("{0}: ".format(t.MLS), end="")
         try:
-            tocompare = remax.get_house(t.MLS)
+            tocompare = redfin.get_house(t.MLS)
         except KeyboardInterrupt:
             raise
         except xml.parsers.expat.ExpatError, e:
             print(yellow("{0}: Must manually lookup (xml parsing error): {1}".format(t.MLS, e)))
             continue
-        except remax.RetrievalError:
+        except redfin.RetrievalError:
             print(yellow("{0}: Error retrieving".format(t.MLS)))
             continue
-        except remax.NotFoundException, e:
+        except redfin.NotFoundException, e:
             print(red("{0}: House is no longer available!!!".format(t.MLS)))
             continue
 
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     try:
         find_updates(sys.argv[1])
     except IndexError:
-        print("{prog} <file>".format(sys.argv[0]))
+        print("{prog} <file>".format(prog=sys.argv[0]))
     except KeyboardInterrupt:
         print("Interrupted!")   
 

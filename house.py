@@ -21,7 +21,12 @@ class House(object):
         string += "Status:          {0}\n".format(self.Status)
         string += "Address:         {0}\n".format(self.Address)
         string += "Price:           ${0:.2f}\n".format(self.Price)
-        string += "Taxes:           ${0:.2f}\n".format(self.Taxes)
+        string += "Beds:            {0}\n".format(self.Beds)
+        string += "Baths:           {0}\n".format(self.Baths)
+        try:
+            string += "Taxes:           ${0:.2f}\n".format(self.Taxes)
+        except:
+            pass
         string += "HOA:             ${0:.2f}\n".format(self.HOA)
         try:
             string += "Work Mileage:    {0}\n".format(self.distances['work'])
